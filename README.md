@@ -6,7 +6,8 @@
 
 Las tiendas de barrio en Colombia manejan ventas, fiado, inventario y caja entre cuaderno, calculadora y WhatsApp. No saben con claridad cuánto ganan, qué producto se les está agotando ni quién les debe. Controla reúne eso en una sola herramienta pensada para el dueño y sus empleados, con los medios de pago que realmente usan: efectivo, Nequi, Daviplata y fiado.
 
-<p align="center"><img src="docs/app-preview.png" alt="Pantalla de inicio de la app" width="280"></p>
+<p align="center"><img src="docs/screens.png" alt="Pantallas de la app: acceso, punto de venta, medios de pago, inventario y finanzas" width="100%"></p>
+<p align="center"><sub>Acceso · Punto de venta · Medios de pago · Inventario · Finanzas con pronóstico de ventas. Capturas de la app con datos de un negocio de prueba.</sub></p>
 
 ## Qué hace
 
