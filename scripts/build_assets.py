@@ -1,4 +1,5 @@
 """Genera hero y diagrama de arquitectura (claro/oscuro). Uso: python scripts/build_assets.py"""
+import base64
 from pathlib import Path
 from xml.sax.saxutils import escape
 
@@ -7,10 +8,12 @@ OUT.mkdir(exist_ok=True)
 SANS = "'Segoe UI', -apple-system, 'Helvetica Neue', Arial, sans-serif"
 MONO = "'SFMono-Regular', Consolas, 'Liberation Mono', monospace"
 EMBER = "#F26A21"
+# Paleta de Controla (verdes de la app)
 THEMES = {
-    "dark": dict(bg="#12161F", card="#1A2030", border="#2B3345", text="#F4EEE4", muted="#8A93A6", acc="#F26A21", chip="#232B3D", dot="#1F2637", glow="#F26A21"),
-    "light": dict(bg="#F4EEE4", card="#FBF8F2", border="#E0D6C6", text="#12161F", muted="#5E6676", acc="#C9500F", chip="#EBE3D5", dot="#E3D9C8", glow="#F26A21"),
+    "dark": dict(bg="#0E1F15", card="#12261A", border="#1F4030", text="#E5F6EC", muted="#8FB5A0", acc="#34C26B", chip="#1B3A29", dot="#163223", glow="#159947"),
+    "light": dict(bg="#F6FAF4", card="#FFFFFF", border="#D7EADD", text="#102A1B", muted="#4E6B5A", acc="#159947", chip="#E5F6EC", dot="#DCEBDD", glow="#34C26B"),
 }
+ICON = base64.b64encode((Path(__file__).resolve().parent / "brand" / "controla-icon.png").read_bytes()).decode()
 
 
 def chips(items, x, y, t, size=13):
@@ -33,16 +36,17 @@ def hero(t):
             f'<g clip-path="url(#c)"><rect width="{w}" height="{h}" fill="{t["bg"]}"/><rect width="{w}" height="{h}" fill="url(#dots)"/>'
             f'<g filter="url(#b)" opacity=".38"><circle class="o" cx="1000" cy="90" r="120" fill="{t["glow"]}"/></g></g>'
             f'<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="24" fill="none" stroke="{t["border"]}"/>'
-            f'<rect x="72" y="52" width="72" height="72" rx="16" fill="{EMBER}"/>'
-            f'<text x="108" y="105" text-anchor="middle" font-family="{SANS}" font-size="52" font-weight="900" fill="#12161F">C</text>'
-            f'<text x="164" y="96" font-family="{MONO}" font-size="16" fill="{t["acc"]}">proyecto de grado · Universidad EAN</text>'
+            f'<clipPath id="ic"><rect x="72" y="48" width="80" height="80" rx="20"/></clipPath>'
+            f'<rect x="72" y="48" width="80" height="80" rx="20" fill="#FFFFFF" stroke="{t["border"]}"/>'
+            f'<image href="data:image/png;base64,{ICON}" x="72" y="48" width="80" height="80" clip-path="url(#ic)"/>'
+            f'<text x="172" y="96" font-family="{MONO}" font-size="16" fill="{t["acc"]}">proyecto de grado · Universidad EAN</text>'
             f'<text x="72" y="190" font-family="{SANS}" font-size="62" font-weight="800" letter-spacing="-2" fill="{t["text"]}">Controla</text>'
             f'<text x="72" y="228" font-family="{SANS}" font-size="22" fill="{t["muted"]}">Gestión de ventas, inventario y finanzas para tiendas de barrio.</text>'
             + chips(["Flutter", "NestJS", "SQL Server", "Python · ML", "Next.js"], 72, 246, t) + '</svg>')
 
 
 def box(t, x, y, w, h, title, sub, accent=False):
-    stroke = EMBER if accent else t["border"]
+    stroke = t["acc"] if accent else t["border"]
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="14" fill="{t["card"]}" stroke="{stroke}" stroke-width="{2 if accent else 1}"/>'
             f'<text x="{x + w / 2}" y="{y + h / 2 - 2}" text-anchor="middle" font-family="{SANS}" font-size="16" font-weight="700" fill="{t["text"]}">{escape(title)}</text>'
             f'<text x="{x + w / 2}" y="{y + h / 2 + 18}" text-anchor="middle" font-family="{MONO}" font-size="11" fill="{t["muted"]}">{escape(sub)}</text>')
